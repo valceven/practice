@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/acer/Documents/Codes/testers/Hashtable",
-      "program": "c:/Users/acer/Documents/Codes/testers/Hashtable/build/Debug/outDebug",
+      "cwd": "c:/Users/acer/Documents/Codes/testers/array",
+      "program": "c:/Users/acer/Documents/Codes/testers/array/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
