@@ -2,48 +2,52 @@
 #include <algorithm>
 using namespace std;
 
+template <typename T>
 class ArrayList {
 private:
-    int* arr;
+    T* arr;
     int capacity;
     int currentSize;
 
 public:
     ArrayList() {
         capacity = 10; // Initial capacity
-        arr = (int*)malloc(capacity * sizeof(int));
+        arr = new T[capacity];
         currentSize = 0;
     }
 
     ~ArrayList() {
-        free(arr);
+        delete[] arr;
     }
 
     // Insert an element into the ArrayList
-    void insert(int val) {
+    void insert(const T& val) {
         if (currentSize == capacity) {
             capacity *= 2; // Double the capacity if needed
-            arr = (int*)realloc(arr, capacity * sizeof(int));
+            T* newArr = new T[capacity];
+            copy(arr, arr + currentSize, newArr);
+            delete[] arr;
+            arr = newArr;
         }
         arr[currentSize++] = val;
     }
 
     // Print the ArrayList
-    void print() {
+    void print() const {
         for (int i = 0; i < currentSize; i++) {
             cout << arr[i] << " ";
         }
         cout << endl;
     }
 
-    int size() {
+    int size() const {
         return currentSize;
     }
 
     // Insertion Sort
     void insertionSort() {
         for (int i = 1; i < currentSize; i++) {
-            int key = arr[i];
+            T key = arr[i];
             int j = i - 1;
             while (j >= 0 && arr[j] > key) {
                 arr[j + 1] = arr[j];
@@ -76,115 +80,57 @@ public:
             swap(arr[i], arr[minIndex]);
         }
     }
-
-    // Quick Sort
-    void quickSort(int low, int high) {
-        if (low < high) {
-            int pivot = partition(low, high);
-            quickSort(low, pivot - 1);
-            quickSort(pivot + 1, high);
-        }
-    }
-
-    // Merge Sort
-    void mergeSort(int low, int high) {
-        if (low < high) {
-            int mid = low + (high - low) / 2;
-            mergeSort(low, mid);
-            mergeSort(mid + 1, high);
-            merge(low, mid, high);
-        }
-    }
-
-private:
-    // Partition function for Quick Sort
-    int partition(int low, int high) {
-        int pivot = arr[high];
-        int i = low - 1;
-        for (int j = low; j <= high - 1; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                swap(arr[i], arr[j]);
-            }
-        }
-        swap(arr[i + 1], arr[high]);
-        return i + 1;
-    }
-
-    // Merge function for Merge Sort
-    void merge(int low, int mid, int high) {
-        int n1 = mid - low + 1;
-        int n2 = high - mid;
-
-        int* left = (int*)malloc(n1 * sizeof(int));
-        int* right = (int*)malloc(n2 * sizeof(int));
-
-        for (int i = 0; i < n1; i++) {
-            left[i] = arr[low + i];
-        }
-        for (int j = 0; j < n2; j++) {
-            right[j] = arr[mid + 1 + j];
-        }
-
-        int i = 0, j = 0, k = low;
-        while (i < n1 && j < n2) {
-            if (left[i] <= right[j]) {
-                arr[k++] = left[i++];
-            } else {
-                arr[k++] = right[j++];
-            }
-        }
-
-        while (i < n1) {
-            arr[k++] = left[i++];
-        }
-
-        while (j < n2) {
-            arr[k++] = right[j++];
-        }
-
-        free(left);
-        free(right);
-    }
 };
 
 int main() {
-    ArrayList list;
+    ArrayList<int> intList;
+    ArrayList<double> doubleList;
+    ArrayList<char> charList;
 
     // Insert elements
-    list.insert(5);
-    list.insert(2);
-    list.insert(7);
-    list.insert(3);
-    list.insert(1);
+    intList.insert(5);
+    intList.insert(2);
+    intList.insert(7);
+    intList.insert(3);
+    intList.insert(1);
 
-    cout << "Original ArrayList: ";
-    list.print();
-
-    // Sort using Insertion Sort
-    list.insertionSort();
-    cout << "ArrayList after Insertion Sort: ";
-    list.print();
-
-    // Sort using Bubble Sort
-    list.bubbleSort();
-    cout << "ArrayList after Bubble Sort: ";
-    list.print();
+    cout << "Original Integer ArrayList: ";
+    intList.print();
 
     // Sort using Selection Sort
-    list.selectionSort();
-    cout << "ArrayList after Selection Sort: ";
-    list.print();
+    intList.selectionSort();
+    cout << "Integer ArrayList after Selection Sort: ";
+    intList.print();
 
-    // Sort using Quick Sort
-    list.quickSort(0, list.size() - 1);
-    cout << "ArrayList after Quick Sort: ";
-    list.print();
+    // Insert elements
+    doubleList.insert(5.5);
+    doubleList.insert(2.2);
+    doubleList.insert(7.7);
+    doubleList.insert(3.3);
+    doubleList.insert(1.1);
 
-    // Sort using Merge Sort
-    list.mergeSort(0, list.size() - 1);
-    cout << "ArrayList after Merge Sort: ";
-    list.print();
+    cout << "Original Double ArrayList: ";
+    doubleList.print();
+
+    // Sort using Bubble Sort
+    doubleList.bubbleSort();
+    cout << "Double ArrayList after Bubble Sort: ";
+    doubleList.print();
+
+    // Insert elements
+    charList.insert('e');
+    charList.insert('b');
+    charList.insert('g');
+    charList.insert('d');
+    charList.insert('a');
+
+    cout << "Original Char ArrayList: ";
+    charList.print();
+
+    // Sort using Insertion Sort
+    charList.insertionSort();
+    cout << "Char ArrayList after Insertion Sort: ";
+    charList.print();
 
     return 0;
 }

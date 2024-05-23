@@ -53,7 +53,62 @@ class BSTree {
         size++;
     }
 
-    
+    void remove(int num){
+
+        node* curr = root;
+        node* parent = curr->parent;
+        
+        while(curr){
+            parent = curr;
+
+            if(num < curr->element){
+                curr = curr->left;
+            }else{
+                curr = curr->right;
+            }
+
+            if(curr->element == num){
+                node* temp = curr->right;
+                while(temp){
+                    temp = temp->left;
+                }
+                curr->element = temp->element;
+                if(temp->is_red){
+                    if(temp->parent && temp->parent->left == temp){
+                        if(temp->left){
+                            temp->parent->left = temp->left;
+                            temp->left->parent = temp->parent;
+                        }else if(temp->right){
+                            temp->parent->right = temp->right;
+                            temp->left->parent = temp->parent;
+                        }
+                    }else if(temp->parent && temp->parent->right == temp){
+                        if(temp->left){
+                            temp->parent->left = temp->left;
+                            temp->left->parent = temp->parent;
+                        }else if(temp->right){
+                            temp->parent->right = temp->right;
+                            temp->left->parent = temp->parent;
+                        }
+                    }
+                    delete temp;
+                    size--;
+                    return;
+                }else{
+                    if(!temp->is_red && temp->right->is_red){
+                        temp->right->is_red = false;
+                        size--;
+                        delete temp;
+                        return;
+                    }
+                    if(!temp->is_red && !temp->right->is_red){
+
+                    }
+                }
+            }
+        }
+    }
+
     private:
 
     void recolor(node* n){
