@@ -19,13 +19,6 @@ public:
         num_edge = 0;
     }
 
-    ~GraphList() {
-        for (int i = 0; i < num_vert; ++i) {
-            delete s_vertices[i];
-        }
-        delete[] s_vertices;
-    }
-
     int numVertices() {
         return num_vert;
     }

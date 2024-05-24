@@ -46,10 +46,10 @@ public:
 
     // Insertion Sort
     void insertionSort() {
-        for (int i = 1; i < currentSize; i++) {
+        for(int i = 1; i < currentSize; i++){
             T key = arr[i];
-            int j = i - 1;
-            while (j >= 0 && arr[j] > key) {
+            int j = i-1;
+            while(j >= 0 && arr[j] > key){
                 arr[j + 1] = arr[j];
                 j--;
             }
@@ -59,10 +59,10 @@ public:
 
     // Bubble Sort
     void bubbleSort() {
-        for (int i = 0; i < currentSize - 1; i++) {
-            for (int j = 0; j < currentSize - i - 1; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    swap(arr[j], arr[j + 1]);
+        for(int i = 0; i  < currentSize -1; i++){
+            for(int j = 0; j < currentSize - 1 - i; j++){
+                if(arr[i] > arr[j]){
+                    swap(arr[j],arr[i]);
                 }
             }
         }
@@ -70,16 +70,17 @@ public:
 
     // Selection Sort
     void selectionSort() {
-        for (int i = 0; i < currentSize - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < currentSize; j++) {
-                if (arr[j] < arr[minIndex]) {
-                    minIndex = j;
+        for(int i = 0; i < currentSize - 1; i++){
+            int minIdx = i;
+            for(int j = i + 1; j < currentSize; j++){
+                if(arr[j] < arr[i]){
+                    minIdx = j;
                 }
             }
-            swap(arr[i], arr[minIndex]);
+            swap(arr[i],arr[minIdx]);
         }
     }
+
 };
 
 int main() {
